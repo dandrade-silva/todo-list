@@ -20,7 +20,7 @@
   <main>
     <h1 style="text-align: center; padding-bottom: 20px;">Lista de Tarefas</h1>
 
-    <form class="add-form">
+    <form class="add-form" action="{% url 'teste' %}" method="POST">
       <input type="text" placeholder="Adicionar tarefa" class="input-task">
       <button type="submit">+</button>
     </form>
@@ -30,15 +30,21 @@
         <tr>
           <th>Tarefa</th>
           <th>Criada em</th>
+          <th>Prazo entrega</th>
+          <th>Entregue em</th>
           <th>Status</th>
           <th>Ações</th>
         </tr>
       </thead>
 
       <tbody>
+        {% for tarefa in tarefas %}
         <tr>
-          <td>Divulgar os projetos criados no github</td>
-          <td>30 de julho de 2023 15:30</td>
+          <td>{{tarefa.tarefa}}</td>
+          <td>{{tarefa.data_criacao}}</td>
+          <td>{{tarefa.data_prazo}}</td>
+          <td>{{tarefa.data_conclusao}}</td>
+          <td>{{tarefa.status}}</td>
           <td>
             <select>
               <option value="pendente">pendente</option>
@@ -56,6 +62,7 @@
             </button>
           </td>
         </tr>
+        {% endfor %}
       </tbody>
     </table>
   </main>
