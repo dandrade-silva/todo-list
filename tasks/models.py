@@ -15,8 +15,6 @@ class Tarefa(models.Model):
     tarefa = models.CharField(max_length=100)
     status = models.CharField(max_length=15, choices=lista_status)
     data_criacao = models.DateField(default=datetime.now, blank=False)
-    data_prazo = models.DateField(default=datetime.now, blank=False)
-    data_conclusao = models.DateField(null=True)
 
     def __str__(self):
         return self.tarefa
