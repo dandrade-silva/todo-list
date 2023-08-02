@@ -8,8 +8,7 @@ class Tarefa(models.Model):
     lista_status = (
         ('pd', 'pendente'),
         ('ea', 'em andamento'),
-        ('cc', 'concluida'),
-        ('cl', 'cancelada'),
+        ('cc', 'concluida')
     )
 
     tarefa = models.CharField(max_length=100)

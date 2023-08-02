@@ -8,6 +8,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <link rel="shortcut icon" href="{% static 'assets/images/favicon.ico' %}" type="image/x-icon">
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
   <link rel="stylesheet"
     href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
@@ -43,23 +44,39 @@
       <tbody>
         {% for tarefa in tarefas %}
         <tr>
-          <td>{{tarefa.tarefa}}</td>
+          <td id="input-{{ tarefa.id }}">{{tarefa.tarefa}}</td>
           <td>{{tarefa.data_criacao}}</td>
           <td>
-            <select>
-              <option value="pendente">pendente</option>
-              <option value="em andamento">em andamento</option>
-              <option value="concluída">concluída</option>
+            <select id="lista_{{ tarefa.id }}" onchange="atualizaStatus(this)">
+              {% if tarefa.status == "pd" %}
+              <option value="pd" selected>pendente</option>
+              <option value="ea">em andamento</option>
+              <option value="cc">concluída</option>
+              {% elif tarefa.status == "ea" %}
+              <option value="pd">pendente</option>
+              <option value="ea" selected>em andamento</option>
+              <option value="cc">concluída</option>
+              {% else %}
+              <option value="pd">pendente</option>
+              <option value="ea">em andamento</option>
+              <option value="cc" selected>concluída</option>
+              {% endif %}
             </select>
           </td>
           <td>
-            <button class="btn-action">
+            <button id="edit_btn_{{ tarefa.id }}" class="btn-action" onclick="editarTarefa(this)">
               <span class="material-symbols-outlined">edit</span>
             </button>
 
+
             <button class="btn-action">
-              <span class="material-symbols-outlined">delete</span>
+              <span class="material-symbols-outlined">
+                <a class="material-symbols-outlined" href="{% url 'excluir_tarefa' tarefa.id %}">
+                  <img src="{% static 'assets/images/excluir.png' %}" alt="Excluir Tarefa">
+                </a>
+              </span>
             </button>
+
           </td>
         </tr>
         {% endfor %}
@@ -67,7 +84,34 @@
     </table>
   </main>
 
-  <script src="{% static 'js/script.js' %}"></script>
+  <!-- <script src="{% static 'js/script.js' %}"> -->
+  <script>
+    /*     function editarTarefa(botaoClicado) {
+          let idTarefa = botaoClicado.id // Obtém o ID do botão clicado
+          const tdTarefa = document.getElementById("input-" + idTarefa)
+    
+          // Criando input dinamicamente
+          var inputTarefa = document.createElement('input')
+          inputTarefa.setAttribute('type', 'text')
+          inputTarefa.setAttribute('id', tdTarefa.getAttribute('id'))
+    
+          alert("Clicou no botão com ID: " + idTarefa);
+          alert("Você está com <td> " + tdTarefa.getAttribute('id') + " selecionado");
+    
+    
+    
+          // Agora você pode fazer o que precisar com o ID, como redirecionar para uma página com o ID
+    
+          // window.location.href = '/editar_tarefa/' + idTarefa; */
+
+    function atualizaStatus(listaSelecionada) {
+      let idLista = listaSelecionada.id.split("_")[1]
+      let statusLista = listaSelecionada.value
+
+      window.location.href = '/atualiza_status/' + idLista + "/" + statusLista;
+    }
+
+  </script>
 </body>
 
 </html>
