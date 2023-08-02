@@ -48,12 +48,12 @@ def excluir_tarefa(request, id):
     return redirect('/')
 
 
-def editar_tarefa(request):
-    # tarefa = Tarefa.objects.get(id=id)
-    # tarefa.delete()
+def editar_tarefa(request, id, nova_tarefa):
+    tarefa = Tarefa.objects.get(id=id)
 
-    messages.add_message(request, constants.INFO,
-                         'Implementar Editar Tarefa...')
+    tarefa.tarefa = nova_tarefa
+
+    tarefa.save()
 
     return redirect('/')
 

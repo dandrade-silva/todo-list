@@ -64,7 +64,7 @@
             </select>
           </td>
           <td>
-            <button id="edit_btn_{{ tarefa.id }}" class="btn-action" onclick="editarTarefa(this)">
+            <button id="edit_{{ tarefa.id }}" class="btn-action" onclick="editarTarefa(this)">
               <span class="material-symbols-outlined">edit</span>
             </button>
 
@@ -86,23 +86,44 @@
 
   <!-- <script src="{% static 'js/script.js' %}"> -->
   <script>
-    /*     function editarTarefa(botaoClicado) {
-          let idTarefa = botaoClicado.id // Obtém o ID do botão clicado
-          const tdTarefa = document.getElementById("input-" + idTarefa)
-    
-          // Criando input dinamicamente
-          var inputTarefa = document.createElement('input')
-          inputTarefa.setAttribute('type', 'text')
-          inputTarefa.setAttribute('id', tdTarefa.getAttribute('id'))
-    
-          alert("Clicou no botão com ID: " + idTarefa);
-          alert("Você está com <td> " + tdTarefa.getAttribute('id') + " selecionado");
-    
-    
-    
-          // Agora você pode fazer o que precisar com o ID, como redirecionar para uma página com o ID
-    
-          // window.location.href = '/editar_tarefa/' + idTarefa; */
+    function editarTarefa(botaoClicado) {
+      let idBotao = botaoClicado.id.split("_")[1]
+      let tdTarefa = document.getElementById("input-" + idBotao)
+
+      // Cria o elemento de input
+      const inputElement = document.createElement('input')
+      inputElement.type = "text"
+      inputElement.value = tdTarefa.innerText
+
+      //Substitui o contéudo da célula pelo campo de texto
+      tdTarefa.innerText = ""
+      tdTarefa.appendChild(inputElement)
+
+      // Coloca o foco no campo de entrada
+      inputElement.focus();
+
+      // Função para salvar as alterações
+      function salvarAlteracoes() {
+        const novoConteudo = inputElement.value;
+        tdTarefa.removeChild(inputElement);
+        tdTarefa.textContent = novoConteudo;
+        window.location.href = '/editar_tarefa/' + idBotao + "/" + novoConteudo;
+      }
+
+      // Adiciona ouvinte de evento para detectar a tecla Enter
+      inputElement.addEventListener("keydown", function (event) {
+        if (event.key === "Enter" || event.key === "Escape") {
+          salvarAlteracoes();
+        }
+      });
+
+      // Adiciona ouvinte de evento para detectar a perda de foco
+      inputElement.addEventListener("blur", salvarAlteracoes);
+    }
+
+    // Agora você pode fazer o que precisar com o ID, como redirecionar para uma página com o ID
+
+    // window.location.href = '/editar_tarefa/' + idTarefa;
 
     function atualizaStatus(listaSelecionada) {
       let idLista = listaSelecionada.id.split("_")[1]
@@ -110,6 +131,8 @@
 
       window.location.href = '/atualiza_status/' + idLista + "/" + statusLista;
     }
+
+
 
   </script>
 </body>
