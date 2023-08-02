@@ -1,7 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Tarefa
-
-# Create your views here.
+from django.contrib.messages import constants
+from django.contrib import messages
+from datetime import datetime
 
 
 def index(request):
@@ -12,3 +13,25 @@ def index(request):
 
 def teste(request):
     return render(request, 'tasks/teste.html')
+
+
+def cadastrar_tarefa(request):
+    tarefa = request.POST.get('tarefa')
+
+    if Tarefa.objects.filter(tarefa=tarefa).exists():
+        messages.add_message(request, constants.ERROR,
+                             'Essa tarefa já está cadastrada')
+        return redirect('/')
+
+    tarefa = Tarefa(
+        tarefa=tarefa,
+        status="pd",
+        data_criacao=datetime.now()
+    )
+
+    tarefa.save()
+
+    messages.add_message(request, constants.INFO,
+                         'Tarefa cadastrada com sucesso')
+
+    return redirect('/')

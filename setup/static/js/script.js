@@ -1,4 +1,4 @@
-const tbody = document.querySelector("tbody");
+/* const tbody = document.querySelector("tbody");
 const addForm = document.querySelector(".add-form");
 const inputTask = document.querySelector(".input-task");
 
@@ -150,3 +150,4 @@ const loadTasks = async () => {
 addForm.addEventListener("submit", addTask);
 
 loadTasks();
+ */

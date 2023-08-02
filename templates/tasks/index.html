@@ -16,12 +16,17 @@
 </head>
 
 <body>
+  {% for message in messages %}
+  <div class="alert {{ message.tags }}" role="alert">
+    {{ message }}
+  </div>
+  {% endfor %}
 
   <main>
     <h1 style="text-align: center; padding-bottom: 20px;">Lista de Tarefas</h1>
 
-    <form class="add-form" action="{% url 'teste' %}" method="POST">
-      <input type="text" placeholder="Adicionar tarefa" class="input-task">
+    <form class="add-form" action="{% url 'cadastrar_tarefa' %}" method="POST">{% csrf_token %}
+      <input type="text" name="tarefa" placeholder="Adicionar tarefa" class="input-task">
       <button type="submit">+</button>
     </form>
 
