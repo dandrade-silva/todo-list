@@ -82,10 +82,21 @@ WSGI_APPLICATION = "setup.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-DATABASES = {
+""" DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
         "NAME": BASE_DIR / "db.sqlite3",
+    }
+} """
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'todolist',
+        'USER': 'postgres',
+        'PASSWORD': '10VZoBZ8zLNQCWlFXbxT',
+        'HOST': 'database.cnsgeb9nspce.us-east-1.rds.amazonaws.com',
+        'PORT': '5432',
     }
 }
 
