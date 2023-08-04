@@ -43,7 +43,9 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "tasks.apps.TasksConfig"
+    "tasks.apps.TasksConfig",
+    "storages"
+
 ]
 
 MIDDLEWARE = [
@@ -139,6 +141,8 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+# ADMIN_MEDIA_PREFIX = '/static/admin/'
+
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'setup/static')
 ]
@@ -160,3 +164,17 @@ MESSAGE_TAGS = {
     constants.SUCCESS: 'alert-success',
     constants.INFO: 'alert-info ',
 }
+
+
+# AWS programmatic access
+
+AWS_ACCESS_KEY_ID = os.getenv("AWS_ACCESS_KEY_ID")
+AWS_SECRET_ACCESS_KEY = os.getenv("AWS_SECRET_ACCESS_KEY")
+
+AWS_STORAGE_BUCKET_NAME = os.getenv("AWS_STORAGE_BUCKET_NAME")
+
+DEFAULT_FILE_STORAGE = os.getenv("DEFAULT_FILE_STORAGE")
+
+STATICFILES_STORAGE = os.getenv("STATICFILES_STORAGE")
+
+AWS_S3_CUSTOM_DOMAIN = '%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
